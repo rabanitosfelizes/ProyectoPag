@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ServiCentro Pro | Ingeniería Eléctrica y Bombeo Industrial</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="icon" href="icon.png" type="image/x-icon">
+    <style>
+        /* =========================================
+           VARIABLES DE DISEÑO PREMIUM (MODERNO/OSCURO)
+           ========================================= */
+        :root {
+            --primary: #02050d;
+            --secondary: #0B132B;
+            --accent: #1E40AF;
+            --accent-glow: #2563EB;
+            --accent-cyan: #00D4FF;
+            --bg-main: #F8FAFC;
+            --text-main: #334155;
+            --text-light: #64748B;
+            --white: #FFFFFF;
+            --shadow-premium: 0 20px 40px rgba(11,19,43,0.06), 0 5px 15px rgba(0,0,0,0.02);
+            --transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        body { background-color: var(--bg-main); color: var(--text-main); line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+
+        /* =========================================
+           TOP BAR CORPORATIVA (SELECTOR DE IDIOMAS REAL)
+           ========================================= */
+        .top-bar-corporate { background-color: #02050d; color: #94a3b8; font-size: 0.78rem; padding: 12px 0; letter-spacing: 0.5px; border-bottom: 1px solid rgba(255,255,255,0.04); position: relative; z-index: 1002; }
+        .top-bar-container { max-width: 1440px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 5%; }
+        .top-bar-left { font-weight: 600; display: flex; align-items: center; gap: 8px; color: #cbd5e1; }
+        .top-bar-right { display: flex; gap: 24px; align-items: center; }
+        .top-bar-right a { color: #94a3b8; text-decoration: none; transition: var(--transition); font-weight: 500; }
+        .top-bar-right a:hover { color: var(--accent-cyan); }
+        
+        /* Dropdown de Idiomas Exclusivo */
+        .lang-selector { position: relative; display: inline-block; cursor: pointer; font-weight: 700; color: #cbd5e1; padding: 5px 12px; border-radius: 6px; background: rgba(255,255,255,0.06); transition: var(--transition); border: 1px solid rgba(255,255,255,0.05); }
+        .lang-selector:hover { background: rgba(255,255,255,0.12); color: var(--white); }
+        .lang-dropdown { display: none; position: absolute; top: 100%; right: 0; background: #0b132b; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 2005; min-width: 130px; margin-top: 6px; overflow: hidden; }
+        .lang-selector:hover .lang-dropdown { display: block; }
+        .lang-dropdown div { display: block; padding: 10px 16px; color: #cbd5e1; text-decoration: none; font-size: 0.78rem; transition: var(--transition); text-align: left; font-weight: 600; }
+        .lang-dropdown div:hover { background: var(--accent); color: var(--white); }
+
+        /* =========================================
+           NAVBAR CON GLASSMORPHISM DINÁMICO
+           ========================================= */
+        .navbar { background-color: var(--secondary); color: var(--white); padding: 22px 0; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 30px rgba(0,0,0,0.15); border-bottom: 1px solid rgba(255,255,255,0.02); transition: var(--transition); }
+        .navbar.scrolled { padding: 14px 0; background: rgba(11, 19, 43, 0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 10px 30px rgba(2,5,13,0.2); }
+        .navbar-container { max-width: 1440px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 5%; }
+        .logo { display: flex; align-items: center; font-size: 26px; font-weight: 900; color: var(--white); text-decoration: none; letter-spacing: -0.5px; }
+        .logo span { background: linear-gradient(135deg, #fff 50%, var(--accent-cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .logo-icon { width: 36px; height: 36px; margin-right: 12px; object-fit: contain; }
+        .nav-right-section { display: flex; align-items: center; gap: 2.5rem; }
+        .nav-menu { display: flex; gap: 2rem; }
+        .nav-menu a { color: #94a3b8; text-decoration: none; font-size: 15px; font-weight: 600; transition: var(--transition); position: relative; padding: 6px 0; }
+        .nav-menu a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--accent-cyan); transition: var(--transition); }
+        .nav-menu a:hover::after, .nav-menu a.active::after { width: 100%; }
+        .nav-menu a.active, .nav-menu a:hover { color: var(--white); }
+
+        /* Botones Premium */
+        .btn { padding: 1.1rem 2.6rem; background: linear-gradient(135deg, var(--accent) 0%, #1d4ed8 100%); color: var(--white); text-decoration: none; font-weight: 700; border-radius: 50px; transition: var(--transition); display: inline-flex; align-items: center; gap: 8px; font-size: 0.95rem; border: none; cursor: pointer; box-shadow: 0 4px 25px rgba(30,64,175,0.35); }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(30,64,175,0.45); filter: brightness(1.15); }
+        .btn-outline { background: transparent; color: var(--white); border: 2px solid rgba(255,255,255,0.25); box-shadow: none; }
+        .btn-outline:hover { background: var(--white); color: var(--secondary); border-color: var(--white); transform: translateY(-3px); }
+
+        /* =========================================
+           HERO SECTION CINEMÁTICO AVANZADO
+           ========================================= */
+        .hero { position: relative; display: flex; align-items: center; justify-content: flex-start; padding: 16rem 8% 18rem 8%; color: var(--white); overflow: hidden; background-color: #02050d; min-height: 85vh; }
+        .hero-video-bg { position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%; width: auto; height: auto; transform: translateX(-50%) translateY(-50%); z-index: 1; object-fit: cover; opacity: 0.48; filter: brightness(0.7) contrast(1.15); }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(2,5,13,0.98) 0%, rgba(11,19,43,0.82) 45%, rgba(0,212,255,0.12) 100%); z-index: 2; }
+        .hero-content { position: relative; z-index: 3; max-width: 850px; }
+        .hero-tag { display: inline-block; padding: 6px 16px; background: rgba(0, 214, 255, 0.1); border: 1px solid rgba(0, 214, 255, 0.3); color: var(--accent-cyan); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; border-radius: 50px; margin-bottom: 2rem; }
+        .hero h1 { font-size: 4.8rem; line-height: 1.05; margin-bottom: 2rem; letter-spacing: -2px; font-weight: 900; }
+        .hero h1 span { background: linear-gradient(135deg, var(--white) 30%, var(--accent-cyan) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { font-size: 1.3rem; margin-bottom: 3.2rem; opacity: 0.95; font-weight: 400; max-width: 680px; color: #cbd5e1; line-height: 1.7; }
+
+        /* =========================================
+           ANIMACIONES AL HACER SCROLL (REVEAL EFFECTS)
+           ========================================= */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* =========================================
+           TARJETAS DE ESTADÍSTICAS CORPORATIVAS
+           ========================================= */
+        .stats { display: flex; justify-content: space-around; background: var(--white); padding: 3.2rem 5%; margin: -7rem auto 6rem auto; width: 84%; border-radius: 24px; box-shadow: 0 30px 70px -15px rgba(2,5,13,0.12); position: relative; z-index: 10; border: 1px solid #e2e8f0; }
+        .stat-item { text-align: center; flex: 1; border-right: 1px solid #e2e8f0; }
+        .stat-item:last-child { border-right: none; }
+        .stat-item h2 { color: var(--secondary); font-size: 3.2rem; font-weight: 900; letter-spacing: -1px; line-height: 1; }
+        .stat-item h2 span { color: var(--accent-glow); }
+        .stat-item p { color: var(--text-light); font-weight: 800; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1.5px; margin-top: 8px; }
+
+        /* =========================================
+           CARRUSEL INFINITO DE MARCAS HOMOLOGADAS
+           ========================================= */
+        .brands-title { text-align: center; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 3px; color: var(--text-light); margin-bottom: 2.5rem; font-weight: 800; }
+        .marquee-container { width: 100%; overflow: hidden; background: transparent; padding: 1rem 0; margin-bottom: 7rem; }
+        .marquee-inner { display: flex; width: 200%; animation: marquee 28s linear infinite; align-items: center; }
+        .brand-item { width: 25%; display: flex; justify-content: center; align-items: center; padding: 0 3rem; }
+        .brand-logo-img { height: 48px; width: auto; object-fit: contain; filter: grayscale(100%) opacity(0.4); transition: var(--transition); }
+        .brand-item:hover .brand-logo-img { transform: scale(1.12); filter: grayscale(0%) opacity(1); }
+        @keyframes marquee { 0% { transform: translateX(0%); } 100% { transform: translateX(-50%); } }
+
+        /* =========================================
+           SECCIÓN DE SERVICIOS INTEGRALES (CON TUS IMÁGENES)
+           ========================================= */
+        .section-header { text-align: center; max-width: 720px; margin: 0 auto 5rem auto; padding: 0 5%; }
+        .section-header h2 { font-size: 2.8rem; color: var(--secondary); letter-spacing: -1px; margin-bottom: 1.2rem; font-weight: 900; }
+        .section-header p { color: var(--text-light); font-size: 1.1rem; line-height: 1.6; }
+        
+        .features { padding: 0 8% 8rem 8%; display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 3rem; }
+        .card { background: var(--white); border-radius: 24px; overflow: hidden; box-shadow: var(--shadow-premium); transition: var(--transition); display: flex; flex-direction: column; border: 1px solid #e2e8f0; }
+        .card:hover { transform: translateY(-12px); box-shadow: 0 40px 80px rgba(11,19,43,0.15); border-color: var(--accent-cyan); }
+        .card-img-wrapper { width: 100%; height: 260px; overflow: hidden; position: relative; }
+        .card-img { width: 100%; height: 100%; object-fit: cover; transition: var(--transition); }
+        .card:hover .card-img { transform: scale(1.06); }
+        .card-content { padding: 2.8rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .card h3 { color: var(--secondary); margin-bottom: 1.2rem; font-size: 1.55rem; font-weight: 800; letter-spacing: -0.5px; }
+        .card p { font-size: 0.98rem; color: var(--text-light); margin-bottom: 2rem; line-height: 1.65; }
+        .card-link { color: var(--accent); font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-size: 0.98rem; transition: var(--transition); }
+        .card-link:hover { color: var(--secondary); gap: 12px; }
+
+        /* =========================================
+           WIDGET DE DIAGNÓSTICO INTERACTIVO AVANZADO
+           ========================================= */
+        .interactive-widget { background: var(--white); max-width: 1050px; margin: 0 auto 8rem auto; border-radius: 28px; padding: 4.5rem; box-shadow: var(--shadow-premium); border: 1px solid #e2e8f0; }
+        .widget-grid { display: flex; gap: 4rem; align-items: center; }
+        .widget-options { flex: 1; }
+        .widget-screen { flex: 1.2; background: #f8fafc; padding: 3.2rem; border-radius: 20px; border-left: 6px solid var(--accent); min-height: 250px; display: flex; flex-direction: column; justify-content: center; border-top: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0; position: relative; }
+        .diagnostic-btn { width: 100%; text-align: left; padding: 1.4rem 1.8rem; background: transparent; border: 1px solid #e2e8f0; border-radius: 16px; margin-bottom: 1.2rem; font-size: 1rem; font-weight: 700; color: var(--text-main); cursor: pointer; transition: var(--transition); }
+        .diagnostic-btn:hover, .diagnostic-btn.active { background: var(--secondary); color: var(--white); border-color: var(--secondary); box-shadow: 0 12px 24px rgba(2,5,13,0.12); transform: translateX(5px); }
+
+        /* =========================================
+           SECCIÓN ACERCA DE / PROTOCOLOS CORPORATIVOS
+           ========================================= */
+        .about { display: flex; align-items: center; padding: 8rem 8%; background: var(--white); gap: 6rem; border-top: 1px solid #e2e8f0; }
+        .about-img { flex: 1; position: relative; }
+        .about-img img { width: 100%; border-radius: 28px; box-shadow: 0 30px 60px rgba(0,0,0,0.08); }
+        .about-text { flex: 1; }
+        .about-text h2 { font-size: 2.8rem; color: var(--secondary); margin-bottom: 1.8rem; letter-spacing: -1px; font-weight: 900; }
+        .about-text p { margin-bottom: 2.4rem; color: var(--text-light); font-size: 1.08rem; line-height: 1.7; }
+        .checklist { list-style: none; }
+        .checklist li { margin-bottom: 1.4rem; display: flex; align-items: center; gap: 16px; font-weight: 700; color: var(--secondary); font-size: 1.02rem; }
+        .checklist li::before { content: '✓'; color: var(--accent); font-weight: bold; font-size: 1.1rem; background: #e0e7ff; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 50%; shrink: 0; }
+
+        /* =========================================
+           SECCIÓN DE LLAMADO A LA ACCIÓN (CTA)
+           ========================================= */
+        .cta { background: radial-gradient(circle at 20% 20%, var(--accent) 0%, var(--secondary) 100%); padding: 8rem 8%; text-align: center; color: var(--white); position: relative; overflow: hidden; }
+        .cta h2 { font-size: 3.4rem; margin-bottom: 1.6rem; letter-spacing: -1px; font-weight: 900; }
+        .cta p { font-size: 1.3rem; margin-bottom: 3rem; font-weight: 400; max-width: 700px; margin-left: auto; margin-right: auto; opacity: 0.92; color: #cbd5e1; }
+
+        /* =========================================
+           FOOTER CORPORATIVO ESTRUCTURADO
+           ========================================= */
+        footer { background: #02050d; color: var(--white); padding: 7rem 8% 4rem 8%; border-top: 1px solid rgba(255,255,255,0.02); }
+        .footer-content { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 4rem; margin-bottom: 3rem; flex-wrap: wrap; gap: 3rem; }
+        .footer-logo { font-size: 2.4rem; font-weight: 900; color: var(--white); letter-spacing: -0.5px; }
+        .footer-logo span { color: var(--accent-cyan); }
+        .footer-links-group { display: flex; gap: 4rem; }
+        .footer-column h4 { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; color: #94a3b8; margin-bottom: 1.5rem; font-weight: 800; }
+        .footer-column a { display: block; color: #cbd5e1; text-decoration: none; margin-bottom: 0.8rem; font-size: 0.95rem; transition: var(--transition); opacity: 0.85; }
+        .footer-column a:hover { opacity: 1; color: var(--accent-cyan); transform: translateX(3px); }
+        footer p.copyright { font-size: 0.9rem; opacity: 0.5; text-align: center; }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero h1 { font-size: 3.6rem; }
+            .hero, .about, .widget-grid, .footer-content { flex-direction: column; text-align: center; }
+            .hero { padding: 12rem 5% 14rem 5%; justify-content: center; }
+            .hero-content, .widget-options, .widget-screen, .about-text, .about-img { width: 100%; max-width: 100%; }
+            .btn-group-hero { justify-content: center; }
+            .checklist li { justify-content: center; }
+            .stats { flex-direction: column; gap: 2.5rem; margin-top: -4rem; width: 92%; padding: 2.5rem; }
+            .stat-item { border-right: none; border-bottom: 1px solid #e2e8f0; padding-bottom: 1.5rem; }
+            .stat-item:last-child { border-bottom: none; padding-bottom: 0; }
+            .top-bar-corporate { display: none; }
+            .navbar-container { flex-direction: column; gap: 1.5rem; padding: 1.5rem; }
+            .nav-menu { gap: 1.5rem; flex-wrap: wrap; justify-content: center; }
+            .footer-links-group { width: 100%; justify-content: space-around; }
+        }
+
+        /* =========================================
+           ESTILOS COMPATIBLES CON CHATBOT FLOTANTE
+           ========================================= */
+        .hs-chat-fab { position: fixed; bottom: 35px; right: 35px; width: 68px; height: 68px; background: var(--accent); border-radius: 50%; box-shadow: 0 12px 30px rgba(30,64,175,0.45); display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 9999; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s; border: none; outline: none; }
+        .hs-chat-fab:hover { transform: scale(1.1) translateY(-3px); background: var(--secondary); }
+        .hs-chat-fab svg { width: 34px; height: 34px; color: var(--white); }
+        .hs-badge { position: absolute; top: -2px; right: -2px; background: #ef4444; color: white; width: 22px; height: 22px; border-radius: 50%; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; border: 2.5px solid var(--white); }
+        #ventana-chatbot { position: fixed; bottom: 120px; right: 35px; width: 420px; height: 660px; max-height: 82vh; border: none; border-radius: 24px; box-shadow: 0 25px 60px rgba(2,5,13,0.25); z-index: 9998; display: none; background: transparent; transition: all 0.4s ease; }
+        @media (max-width: 480px) { #ventana-chatbot { width: 92%; right: 4%; bottom: 120px; } }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar-corporate">
+        <div class="top-bar-container">
+            <div class="top-bar-left">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                <span data-i18n="top-support">Soporte de Emergencias 24/7 en El Oro: (099) 123-4567</span>
+            </div>
+            <div class="top-bar-right">
+                <a href="#" data-i18n="top-portal">Portal B2B</a>
+                <a href="#" data-i18n="top-certifications">Certificaciones Internacionales</a>
+                
+                <div class="lang-selector">
+                    <span id="lang-current-label">🌐 ES</span>
+                    <div class="lang-dropdown">
+                        <div onclick="translatePage('es')">Español (ES)</div>
+                        <div onclick="translatePage('en')">English (EN)</div>
+                        <div onclick="translatePage('pt')">Português (PT)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <header class="navbar" id="mainNavbar">
+        <div class="navbar-container">
+            <a href="inicio.html" class="logo">
+                <img src="icon.png" alt="Logo ServiCentro" class="logo-icon">
+                <span>ServiCentro<span>.</span></span>
+            </a>
+            <div class="nav-right-section">
+                <nav class="nav-menu">
+                    <a href="inicio.html" class="active" data-i18n="nav-home">Inicio</a>
+                    <a href="servicios.html" data-i18n="nav-services">Servicios</a>
+                    <a href="tienda.html" data-i18n="nav-store">Tienda</a>
+                    <a href="soporte.html" data-i18n="nav-support">Soporte</a>
+                    <a href="contactos.html" data-i18n="nav-contact">Contactos</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <video autoplay muted loop playsinline class="hero-video-bg" poster="hero.jpg">
+            <source src="https://cdn.pixabay.com/video/2020/05/24/40065-425251648_large.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <span class="hero-tag" data-i18n="hero-tag">Ingeniería & Alta Disponibilidad</span>
+            <h1 data-i18n="hero-title">Potencia y continuidad absoluta para <span>la industria.</span></h1>
+            <p data-i18n="hero-desc">Líderes en ingeniería aplicada, mantenimiento electromecánico avanzado y automatización de sistemas críticos. Respaldamos la matriz productiva con precisión internacional.</p>
+            <div class="btn-group-hero" style="display:flex; gap:1.5rem; flex-wrap:wrap;">
+                <a href="contactos.html" class="btn" data-i18n="hero-btn-primary">Agendar Inspección</a>
+                <a href="tienda.html" class="btn btn-outline" data-i18n="hero-btn-secondary">Explorar Catálogo</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats reveal">
+        <div class="stat-item">
+            <h2>+1.5K<span>+</span></h2>
+            <p data-i18n="stat-1">Equipos Intervenidos</p>
+        </div>
+        <div class="stat-item">
+            <h2>99.8<span>%</span></h2>
+            <p data-i18n="stat-2">Eficiencia Operativa</p>
+        </div>
+        <div class="stat-item">
+            <h2>24<span>/7</span></h2>
+            <p data-i18n="stat-3">Asistencia Crítica</p>
+        </div>
+    </section>
+
+    <p class="brands-title reveal" data-i18n="brands-title">Partners Tecnológicos y Marcas Homologadas</p>
+    <div class="marquee-container reveal">
+        <div class="marquee-inner">
+            <div class="brand-item"><img class="brand-logo-img" src="pedrollo.svg" alt="Pedrollo"></div>
+            <div class="brand-item"><img class="brand-logo-img" src="weg.svg" alt="WEG Motors"></div>
+            <div class="brand-item"><img class="brand-logo-img" src="schneiderelectric.svg" alt="Schneider Electric"></div>
+            <div class="brand-item"><img class="brand-logo-img" src="siemens.png" alt="Siemens"></div>
+            <div class="brand-item"><img class="brand-logo-img" src="pedrollo.svg" alt="Pedrollo"></div>
+            <div class="brand-item"><img class="brand-logo-img" src="weg.svg" alt="WEG Motors"></div>
+            <div class="brand-item"><img class="brand-logo-img" src="schneiderelectric.svg" alt="Schneider Electric"></div>
+            <div class="brand-item"><img class="brand-logo-img" src="siemens.png" alt="Siemens"></div>
+        </div>
+    </div>
+
+    <div class="section-header reveal">
+        <h2 data-i18n="services-title">Servicios de Ingeniería Integrados</h2>
+        <p data-i18n="services-subtitle">Garantizamos la máxima disponibilidad de sus operaciones hidráulicas y de control eléctrico bajo normativas internacionales.</p>
+    </div>
+
+    <section class="features">
+        <div class="card reveal">
+            <div class="card-img-wrapper">
+                <img src="bombeo.jpg" alt="Sistemas de Bombeo" class="card-img">
+            </div>
+            <div class="card-content">
+                <h3 data-i18n="card-1-title">Sistemas de Bombeo</h3>
+                <p data-i18n="card-1-desc">Cálculo hidráulico predictivo, montaje a medida y mantenimiento complejo de sistemas de presión constante y bombas sumergibles.</p>
+                <a href="servicios.html" class="card-link" data-i18n="card-link-tech">Ver Detalles Técnicos →</a>
+            </div>
+        </div>
+        <div class="card reveal">
+            <div class="card-img-wrapper">
+                <img src="taller.jpg" alt="Taller Eléctrico e Industrial" class="card-img">
+            </div>
+            <div class="card-content">
+                <h3 data-i18n="card-2-title">Automatización y Control</h3>
+                <p data-i18n="card-2-desc">Integración de tableros de potencia inteligentes, programación de controladores lógicos (PLC) y rebobinado industrial de alta precisión.</p>
+                <a href="servicios.html" class="card-link" data-i18n="card-link-tech">Ver Detalles Técnicos →</a>
+            </div>
+        </div>
+        <div class="card reveal">
+            <div class="card-img-wrapper">
+                <img src="tienda.jpg" alt="Suministros y Repuestos" class="card-img">
+            </div>
+            <div class="card-content">
+                <h3 data-i18n="card-3-title">Suministros Originales</h3>
+                <p data-i18n="card-3-desc">Distribución autorizada de motores NEMA/IEC, variadores de frecuencia, rodamientos avanzados y componentes certificados con garantía completa.</p>
+                <a href="tienda.html" class="card-link" data-i18n="card-link-cat">Acceder al Catálogo →</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-header reveal" style="margin-bottom: 3rem;">
+        <h2 data-i18n="widget-title">Asistente de Diagnóstico Rápido</h2>
+        <p data-i18n="widget-subtitle">Evalúe los síntomas mecánicos y eléctricos de sus sistemas para recibir una orientación de ingeniería oportuna.</p>
+    </div>
+        
+    <section class="interactive-widget reveal">
+        <div class="widget-grid">
+            <div class="widget-options">
+                <button class="diagnostic-btn active" onclick="updateDiagnostic(this, 'sintoma1')" data-i18n="btn-s1">Exceso de vibración o ruido metálico</button>
+                <button class="diagnostic-btn" onclick="updateDiagnostic(this, 'sintoma2')" data-i18n="btn-s2">Disparo del relé térmico / No arranca</button>
+                <button class="diagnostic-btn" onclick="updateDiagnostic(this, 'sintoma3')" data-i18n="btn-s3">Pérdida drástica de caudal y presión</button>
+            </div>
+            <div class="widget-screen">
+                <h4 id="diag-title" style="color:var(--secondary); margin-bottom: 1rem; font-size: 1.35rem; font-weight: 800;" data-i18n="diag-s1-t">Desgaste de Rodamientos o Cavitación</h4>
+                <p id="diag-desc" style="font-size: 1rem; color: var(--text-main); line-height: 1.65;" data-i18n="diag-s1-d">La fricción mecánica suele derivar de falta de lubricación (holgura en rodamientos C3) o destrucción del impulsor por burbujas de vacío. Se requiere paro de emergencia para evitar la fricción del rotor contra el estator.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="about reveal">
+        <div class="about-img">
+            <img src="taller.jpg" alt="Auditoría Técnica ServiCentro">
+        </div>
+        <div class="about-text">
+            <h2 data-i18n="about-title">Protocolos Corporativos Estandarizados</h2>
+            <p data-i18n="about-desc">Cada activo que ingresa a nuestros talleres es gestionado bajo rigurosas normativas internacionales. Aplicamos ensayos de aislamiento rigurosos para certificar la fiabilidad absoluta del equipo antes de su puesta en marcha oficial.</p>
+            <ul class="checklist">
+                <li data-i18n="check-1">Ensayos predictivos homologados por normas IEC/NEMA</li>
+                <li data-i18n="check-2">Componentes de repuesto con trazabilidad completa de fábrica</li>
+                <li data-i18n="check-3">Flota técnica móvil para soporte en planta en toda la provincia</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="cta reveal">
+        <h2 data-i18n="cta-title">Respalde la continuidad de su planta hoy</h2>
+        <p data-i18n="cta-desc">Consulte con nuestros ingenieros especializados para estructurar planes de mantenimiento preventivo a medida o cotizar proyectos de gran escala.</p>
+        <a href="contactos.html" style="background: var(--white); color: var(--secondary);" class="btn" data-i18n="cta-btn">Establecer Contacto Técnico</a>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div>
+                <div class="footer-logo">ServiCentro<span>.</span></div>
+                <p style="opacity: 0.6; font-size: 0.95rem; margin-top: 1rem; max-width: 320px;" data-i18n="footer-brand-desc">Soluciones integrales de ingeniería electromecánica y automatización crítica en Ecuador.</p>
+            </div>
+            <div class="footer-links-group">
+                <div class="footer-column">
+                    <h4 data-i18n="foot-col-1">Empresa</h4>
+                    <a href="inicio.html" data-i18n="nav-home">Inicio</a>
+                    <a href="servicios.html" data-i18n="nav-services">Servicios</a>
+                    <a href="tienda.html" data-i18n="nav-store">Tienda</a>
+                </div>
+                <div class="footer-column">
+                    <h4 data-i18n="foot-col-2">Asistencia</h4>
+                    <a href="soporte.html" data-i18n="nav-support">Soporte</a>
+                    <a href="contactos.html" data-i18n="nav-contact">Contactos</a>
+                    <a href="soporte.html" data-i18n="foot-link-247">Atención 24/7</a>
+                </div>
+            </div>
+        </div>
+        <p class="copyright">&copy; 2026 ServiCentro Industrial Solutions S.A. Todos los derechos reservados. Excelencia operativa desde Machala, El Oro, Ecuador.</p>
+    </footer>
+
+    <iframe id="ventana-chatbot" src="chatbot.html"></iframe>
+    <button class="hs-chat-fab" onclick="abrirEnlaceChatbot()" title="Soporte Técnico con IA">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+        </svg>
+        <div class="hs-badge" id="hsBadge">1</div>
+    </button>
+
+    <script>
+        // DICTIONARY MULTILENGUAJE COMPLETAMENTE REAL (ESPAÑOL, INGLÉS, PORTUGUÉS)
+        const dictionary = {
+            es: {
+                "top-support": "Soporte de Emergencias 24/7 en El Oro: (099) 123-4567",
+                "top-portal": "Portal B2B", "top-certifications": "Certificaciones Internacionales",
+                "nav-home": "Inicio", "nav-services": "Servicios", "nav-store": "Tienda", "nav-support": "Soporte", "nav-contact": "Contactos",
+                "hero-tag": "Ingeniería & Alta Disponibilidad",
+                "hero-title": "Potencia y continuidad absoluta para <span>la industria.</span>",
+                "hero-desc": "Líderes en ingeniería aplicada, mantenimiento electromecánico avanzado y automatización de sistemas críticos. Respaldamos la matriz productiva con precisión internacional.",
+                "hero-btn-primary": "Agendar Inspección", "hero-btn-secondary": "Explorar Catálogo",
+                "stat-1": "Equipos Intervenidos", "stat-2": "Eficiencia Operativa", "stat-3": "Asistencia Crítica",
+                "brands-title": "Partners Tecnológicos y Marcas Homologadas",
+                "services-title": "Servicios de Ingeniería Integrados",
+                "services-subtitle": "Garantizamos la máxima disponibilidad de sus operaciones hidráulicas y de control eléctrico bajo normativas internacionales.",
+                "card-1-title": "Sistemas de Bombeo",
+                "card-1-desc": "Cálculo hidráulico predictivo, montaje a medida y mantenimiento complejo de sistemas de presión constante y bombas sumergibles.",
+                "card-2-title": "Automatización y Control",
+                "card-2-desc": "Integración de tableros de potencia inteligentes, programación de controladores lógicos (PLC) y rebobinado industrial de alta precisión.",
+                "card-3-title": "Suministros Originales",
+                "card-3-desc": "Distribución autorizada de motores NEMA/IEC, variadores de frecuencia, rodamientos avanzados y componentes certificados con garantía completa.",
+                "card-link-tech": "Ver Detalles Técnicos →", "card-link-cat": "Acceder al Catálogo →",
+                "widget-title": "Asistente de Diagnóstico Rápido",
+                "widget-subtitle": "Evalúe los síntomas mecánicos y eléctricos de sus sistemas para recibir una orientación de ingeniería oportuna.",
+                "btn-s1": "Exceso de vibración o ruido metálico", "btn-s2": "Disparo del relé térmico / No arranca", "btn-s3": "Pérdida drástica de caudal y presión",
+                "diag-s1-t": "Desgaste de Rodamientos o Cavitación",
+                "diag-s1-d": "La fricción mecánica suele derivar de falta de lubricación (holgura en rodamientos C3) o destrucción del impulsor por burbujas de vacío. Se requiere paro de emergencia para evitar la fricción del rotor contra el estator.",
+                "diag-s2-t": "Fallo de Fases o Sobrecarga",
+                "diag-s2-d": "Verifique la continuidad de tensión en el tablero de control. Un disparo térmico suele indicar una sobrecarga mecánica, bloqueo del rotor o fallo en los condensadores/contactores de arranque.",
+                "diag-s3-t": "Fuga de Succión o Desbaste Interno",
+                "diag-s3-d": "Revise la válvula de pie (pichón) y las uniones de succión por entrada de aire. Si el motor gira correctamente, el impulsor interno o los sellos mecánicos requieren sustitución inmediata.",
+                "about-title": "Protocolos Corporativos Estandarizados",
+                "about-desc": "Cada activo que ingresa a nuestros talleres es gestionado bajo rigurosas normativas internacionales. Aplicamos ensayos de aislamiento rigurosos para certificar la fiabilidad absoluta del equipo antes de su puesta en marcha oficial.",
+                "check-1": "Ensayos predictivos homologados por normas IEC/NEMA",
+                "check-2": "Componentes de repuesto con trazabilidad completa de fábrica",
+                "check-3": "Flota técnica móvil para soporte en planta en toda la provincia",
+                "cta-title": "Respalde la continuidad de su planta hoy",
+                "cta-desc": "Consulte con nuestros ingenieros especializados para estructurar planes de mantenimiento preventivo a medida o cotizar proyectos de gran escala.",
+                "cta-btn": "Establecer Contacto Técnico", "foot-col-1": "Empresa", "foot-col-2": "Asistencia", "foot-link-247": "Atención 24/7",
+                "footer-brand-desc": "Soluciones integrales de ingeniería electromecánica y automatización crítica en Ecuador."
+            },
+            en: {
+                "top-support": "24/7 Emergency Support in El Oro: (099) 123-4567",
+                "top-portal": "B2B Portal", "top-certifications": "International Certifications",
+                "nav-home": "Home", "nav-services": "Services", "nav-store": "Store", "nav-support": "Support", "nav-contact": "Contact",
+                "hero-tag": "Engineering & High Availability",
+                "hero-title": "Absolute power and continuity for <span>the industry.</span>",
+                "hero-desc": "Leaders in applied engineering, advanced electromechanical maintenance, and automation of critical systems. We back the productive matrix with international precision.",
+                "hero-btn-primary": "Schedule Inspection", "hero-btn-secondary": "Explore Catalog",
+                "stat-1": "Serviced Equipment", "stat-2": "Operational Efficiency", "stat-3": "Critical Assistance",
+                "brands-title": "Technological Partners & Approved Brands",
+                "services-title": "Integrated Engineering Services",
+                "services-subtitle": "We guarantee maximum availability for your hydraulic and electrical control operations under international regulations.",
+                "card-1-title": "Pumping Systems",
+                "card-1-desc": "Predictive hydraulic calculation, tailored assembly, and complex maintenance of constant pressure and submersible pump systems.",
+                "card-2-title": "Automation & Control",
+                "card-2-desc": "Integration of smart power distribution panels, PLC logic controller programming, and high-precision industrial rewinding.",
+                "card-3-title": "Original Supplies",
+                "card-3-desc": "Authorized distribution of NEMA/IEC motors, variable frequency drives (VFD), advanced bearings, and certified components with warranty.",
+                "card-link-tech": "View Technical Details →", "card-link-cat": "Access the Catalog →",
+                "widget-title": "Quick Diagnostic Assistant",
+                "widget-subtitle": "Evaluate the mechanical and electrical symptoms of your systems to receive timely engineering orientation.",
+                "btn-s1": "Excessive vibration or metallic noise", "btn-s2": "Thermal relay trip / Fails to start", "btn-s3": "Drastic loss of flow and pressure",
+                "diag-s1-t": "Bearing Wear or Cavitation",
+                "diag-s1-d": "Mechanical friction usually stems from a lack of lubrication (clearance in C3 bearings) or impeller destruction due to vacuum bubbles. An emergency stop is required to prevent rotor-to-stator friction.",
+                "diag-s2-t": "Phase Failure or Overload",
+                "diag-s2-d": "Check the voltage continuity in the control panel. A thermal trip usually indicates mechanical overload, rotor lock, or a failure in the starting capacitors/contactors.",
+                "diag-s3-t": "Suction Leak or Internal Wear",
+                "diag-s3-d": "Check the foot valve and suction joints for air intake. If the motor rotates correctly, the internal impeller or mechanical seals require immediate replacement.",
+                "about-title": "Standardized Corporate Protocols",
+                "about-desc": "Every asset that enters our workshops is managed under strict international regulations. We perform rigorous insulation testing to certify the equipment's absolute reliability before its official startup.",
+                "check-1": "Predictive testing approved by IEC/NEMA standards",
+                "check-2": "Replacement components with full factory traceability",
+                "check-3": "Mobile technical fleet for on-site support across the province",
+                "cta-title": "Secure your plant continuity today",
+                "cta-desc": "Consult with our specialized engineers to structure customized preventive maintenance plans or quote large-scale projects.",
+                "cta-btn": "Establish Technical Contact", "foot-col-1": "Company", "foot-col-2": "Support Center", "foot-link-247": "24/7 Support Line",
+                "footer-brand-desc": "Comprehensive engineering solutions for electromechanics and critical automation in Ecuador."
+            },
+            pt: {
+                "top-support": "Suporte de Emergência 24/7 em El Oro: (099) 123-4567",
+                "top-portal": "Portal B2B", "top-certifications": "Certificações Internacionais",
+                "nav-home": "Início", "nav-services": "Serviços", "nav-store": "Loja", "nav-support": "Suporte", "nav-contact": "Contatos",
+                "hero-tag": "Engenharia & Alta Disponibilidade",
+                "hero-title": "Potência e continuidade absoluta para <span>a indústria.</span>",
+                "hero-desc": "Líderes em engenharia aplicada, manutenção eletromecânica avançada e automação de sistemas críticos. Apoiamos a matriz produtiva com precisão internacional.",
+                "hero-btn-primary": "Agendar Inspeção", "hero-btn-secondary": "Explorar Catálogo",
+                "stat-1": "Equipamentos Intervindos", "stat-2": "Eficiência Operacional", "stat-3": "Assistência Crítica",
+                "brands-title": "Parceiros Tecnológicos e Marcas Homologadas",
+                "services-title": "Serviços de Engenharia Integrados",
+                "services-subtitle": "Garantimos a máxima disponibilidade de suas operações hidráulicas e de controle elétrico sob regulamentações internacionais.",
+                "card-1-title": "Sistemas de Bombeamento",
+                "card-1-desc": "Cálculo hidráulico preditivo, montagem customizada e manutenção complexa de sistemas de pressão constante e bombas submersíveis.",
+                "card-2-title": "Automação e Controle",
+                "card-2-desc": "Integração de painéis de potência inteligentes, programação de controladores lógicos (CLP) e rebobinagem industrial de alta precisão.",
+                "card-3-title": "Suprimentos Originais",
+                "card-3-desc": "Distribuição autorizada de motores NEMA/IEC, inversores de frequência, rolamentos avançados e componentes certificados com garantia total.",
+                "card-link-tech": "Ver Detalhes Técnicos →", "card-link-cat": "Acessar o Catálogo →",
+                "widget-title": "Assistente de Diagnóstico Rápido",
+                "widget-subtitle": "Avalie os sintomas mecânicos e elétricos de seus sistemas para receber uma orientação de engenharia oportuna.",
+                "btn-s1": "Excesso de vibração ou ruído metálico", "btn-s2": "Disparo do relé térmico / Não arranca", "btn-s3": "Perda drástica de vazão e pressão",
+                "diag-s1-t": "Desgaste de Rolamentos ou Cavitação",
+                "diag-s1-d": "O atrito mecânico geralmente deriva da falta de lubrificação (folga nos rolamentos C3) ou destruição do rotor por bolhas de vácuo. É necessária parada de emergência para evitar o atrito entre o rotor e o estator.",
+                "diag-s2-t": "Falha de Fase ou Sobrecarga",
+                "diag-s2-d": "Verifique a continuidade da tensão no painel de controle. Um disparo térmico costuma indicar sobrecarga mecânica, bloqueio do rotor ou falha nos capacitores/contatores de partida.",
+                "diag-s3-t": "Vazamento de Sucção ou Desgaste Interno",
+                "diag-s3-d": "Verifique a válvula de pé e as juntas de sucção quanto à entrada de ar. Se o motor girar corretamente, o rotor interno ou os selos mecânicos requerem substituição imediata.",
+                "about-title": "Protocolos Corporativos Padronizados",
+                "about-desc": "Cada ativo que entra em nossas oficinas é gerenciado sob rigorosas regulamentações internacionais. Aplicamos ensaios de isolamento rigorosos para certificar a confiabilidade absoluta do equipamento antes da sua ativação oficial.",
+                "check-1": "Ensaios preditivos homologados pelas normas IEC/NEMA",
+                "check-2": "Componentes de reposição com rastreabilidade total de fábrica",
+                "check-3": "Frota técnica móvel para suporte em planta em toda a província",
+                "cta-title": "Garanta a continuidade da sua planta hoje",
+                "cta-desc": "Consulte nossos engenheiros especializados para estruturar planos de manutenção preventiva personalizados ou cotar projetos de grande escala.",
+                "cta-btn": "Estabelecer Contato Técnico", "foot-col-1": "Empresa", "foot-col-2": "Assistência", "foot-link-247": "Atendimento 24/7",
+                "footer-brand-desc": "Soluções integradas de engenharia eletromecânica e automação crítica no Equador."
+            }
+        };
+
+        // MOTOR GENUINO DE TRADUCCIÓN CLIENT-SIDE
+        let activeLang = 'es';
+        const activeDiagnosticKey = { current: 'sintoma1' };
+
+        function translatePage(lang) {
+            activeLang = lang;
+            document.getElementById('lang-current-label').innerText = `🌐 ${lang.toUpperCase()}`;
+
+            // Buscar todos los elementos que contengan la clave i18n
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const translationKey = element.getAttribute('data-i18n');
+                if (dictionary[lang][translationKey]) {
+                    // Si el elemento contiene tags estructurales como <span>, usamos innerHTML
+                    element.innerHTML = dictionary[lang][translationKey];
+                }
+            });
+
+            // Forzar actualización simultánea del Widget según el idioma activo
+            refreshWidgetLanguage();
+        }
+
+        // CONTROL DINÁMICO DE SÍNTOMAS DEL WIDGET
+        const diagnosticDataKeys = {
+            sintoma1: { title: "diag-s1-t", desc: "diag-s1-d" },
+            sintoma2: { title: "diag-s2-t", desc: "diag-s2-d" },
+            sintoma3: { title: "diag-s3-t", desc: "diag-s3-d" }
+        };
+
+        function updateDiagnostic(button, key) {
+            document.querySelectorAll('.diagnostic-btn').forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            activeDiagnosticKey.current = key;
+            refreshWidgetLanguage();
+        }
+
+        function refreshWidgetLanguage() {
+            const currentKeys = diagnosticDataKeys[activeDiagnosticKey.current];
+            const titleElement = document.getElementById('diag-title');
+            const descElement = document.getElementById('diag-desc');
+
+            // Actualizar referencias dinámicas
+            titleElement.setAttribute('data-i18n', currentKeys.title);
+            descElement.setAttribute('data-i18n', currentKeys.desc);
+
+            // Inyectar texto correspondiente del diccionario
+            titleElement.innerHTML = dictionary[activeLang][currentKeys.title];
+            descElement.innerHTML = dictionary[activeLang][currentKeys.desc];
+        }
+
+        // EFECTO DINÁMICO DE NAVBAR AL HACER SCROLL
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('mainNavbar');
+            if (window.scrollY > 60) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // ANIMACIÓN PREMIUM DE ELEMENTOS (REVEAL ON SCROLL VIA INTERSECTION OBSERVER)
+        const observerOptions = { root: null, threshold: 0.12, rootMargin: "0px" };
+        const scrollObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target); // Dejar de observar una vez activado
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(target => scrollObserver.observe(target));
+
+        // ACCIÓN INTEGRADA DEL CHATBOT EMERGENTE
+        function abrirEnlaceChatbot() {
+            const chatbotWindow = document.getElementById('ventana-chatbot');
+            const technicalBadge = document.getElementById('hsBadge');
+            if (technicalBadge) technicalBadge.style.display = 'none';
+
+            if (chatbotWindow.style.display === 'none' || chatbotWindow.style.display === '') {
+                chatbotWindow.style.display = 'block';
+            } else {
+                chatbotWindow.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

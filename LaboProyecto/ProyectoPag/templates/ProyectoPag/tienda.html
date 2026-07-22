@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catálogo Industrial y Suministros | ServiCentro Pro</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" href="icon.png" type="image/x-icon">
+<style>
+:root{--primary-dark:#0B132B;--slate-gray:#475569;--accent-blue:#1E40AF;--accent-amber:#D97706;--bg-light:#F1F5F9;--border-color:#CBD5E1;--white:#FFFFFF;--shadow-subtle:0 1px 2px 0 rgba(0,0,0,0.05);--shadow-card:0 4px 6px -1px rgba(0,0,0,0.05),0 2px 4px -1px rgba(0,0,0,0.03);--shadow-hover:0 20px 25px -5px rgba(0,0,0,0.1),0 10px 10px -5px rgba(0,0,0,0.04);--radius-sm:4px;--radius-md:8px;--transition-fast:all 0.2s ease-in-out}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
+body{background-color:var(--bg-light);color:var(--primary-dark);font-size:14px;overflow-x:hidden}
+.navbar{background-color:#0b1f38;color:#ffffff;padding:15px 0;position:sticky;top:0;z-index:1000;box-shadow:0 2px 10px rgba(0,0,0,0.2)}
+.navbar-container{max-width:1440px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:0 5%}
+.logo{display:flex;align-items:center;font-size:24px;font-weight:800;color:white;text-decoration:none;letter-spacing:-0.5px}
+.logo-icon{width:32px;height:32px;margin-right:10px;object-fit:contain}
+.nav-right-section{display:flex;align-items:center;gap:2rem}
+.nav-menu{display:flex;gap:1.5rem}
+.nav-menu a{color:#ffffff;text-decoration:none;font-size:15px;font-weight:500;transition:color 0.2s}
+.nav-menu a.active,.nav-menu a:hover{color:#00a2e8}
+.cart-trigger-btn{background:#1e3a8a;border:1px solid #3b82f6;color:white;font-weight:600;padding:0.5rem 1rem;border-radius:var(--radius-sm);cursor:pointer;display:flex;align-items:center;gap:8px;transition:var(--transition-fast)}
+.cart-trigger-btn:hover{background:#2563eb}
+.cart-counter-badge{background:#f59e0b;color:white;font-size:0.75rem;padding:2px 6px;border-radius:10px;font-weight:800;transition:transform 0.2s cubic-bezier(0.175,0.885,0.32,1.275)}
+.cart-counter-badge.pulse{transform:scale(1.4)}
+.search-row{background:white;padding:1rem 5%;border-bottom:1px solid var(--border-color);display:flex;justify-content:center}
+.search-container{position:relative;width:100%;max-width:650px}
+.search-wrapper{display:flex;border:2px solid var(--accent-blue);border-radius:var(--radius-sm);overflow:hidden;background:white}
+.search-input{flex:1;padding:0.7rem 1rem;border:none;outline:none;font-size:0.9rem;color:var(--primary-dark)}
+.search-btn{background:var(--accent-blue);color:var(--white);border:none;padding:0 1.5rem;font-weight:600;cursor:pointer;transition:var(--transition-fast)}
+.search-btn:hover{background:#1D4ED8}
+.breadcrumbs{padding:1rem 5% 0 5%;max-width:1440px;margin:0 auto;font-size:0.8rem;color:var(--slate-gray)}
+.breadcrumbs span{margin:0 5px;color:var(--border-color)}
+.main-shop-layout{display:grid;grid-template-columns:280px 1fr;gap:2rem;padding:1.5rem 5% 4rem 5%;max-width:1440px;margin:0 auto}
+.sidebar-filter-panel{background:var(--white);border:1px solid var(--border-color);border-radius:var(--radius-sm);padding:1.5rem;height:fit-content;position:sticky;top:100px;box-shadow:var(--shadow-subtle)}
+.filter-group-box{margin-bottom:2rem}
+.filter-group-title{font-size:0.85rem;font-weight:700;text-transform:uppercase;color:var(--primary-dark);letter-spacing:0.5px;margin-bottom:1rem;border-bottom:1px solid var(--bg-light);padding-bottom:0.5rem}
+.filter-option-list{list-style:none}
+.filter-option-list li{margin-bottom:0.6rem}
+.custom-filter-label{display:flex;align-items:center;gap:8px;font-size:0.9rem;color:#334155;cursor:pointer}
+.custom-filter-label input{width:15px;height:15px;accent-color:var(--accent-blue);cursor:pointer}
+.price-range-inputs{display:flex;gap:8px;align-items:center}
+.price-range-inputs input{width:100%;padding:0.4rem;border:1px solid var(--border-color);border-radius:var(--radius-sm);outline:none;font-size:0.85rem;text-align:center}
+.btn-apply-price{width:100%;background:#F8FAFC;border:1px solid var(--border-color);padding:0.4rem;border-radius:var(--radius-sm);font-size:0.8rem;font-weight:600;cursor:pointer;margin-top:0.5rem;transition:var(--transition-fast)}
+.btn-apply-price:hover{background:var(--primary-dark);color:white}
+.catalog-control-toolbar{background:var(--white);border:1px solid var(--border-color);padding:0.8rem 1.5rem;border-radius:var(--radius-sm);display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;box-shadow:var(--shadow-subtle)}
+.active-sorting-select{padding:0.5rem 1rem;border:1px solid var(--border-color);border-radius:var(--radius-sm);font-size:0.85rem;color:var(--primary-dark);font-weight:500;outline:none;cursor:pointer;background:var(--white)}
+.products-data-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1.5rem}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+.industrial-product-card{background:var(--white);border:1px solid var(--border-color);border-radius:var(--radius-sm);overflow:hidden;display:flex;flex-direction:column;transition:var(--transition-fast);position:relative;animation:fadeInUp 0.4s ease forwards}
+.industrial-product-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover);border-color:var(--slate-gray)}
+.promo-tag-badge{position:absolute;top:0.5rem;left:0.5rem;background:#22C55E;color:white;font-size:0.65rem;font-weight:700;padding:3px 8px;border-radius:2px;z-index:5;text-transform:uppercase;letter-spacing:0.5px}
+.promo-tag-badge.shipping{background:var(--accent-blue)}
+.promo-tag-badge.bulk{background:var(--accent-amber)}
+.stock-indicator-dot{position:absolute;top:0.5rem;right:0.5rem;font-size:0.65rem;font-weight:700;padding:2px 6px;border-radius:2px;z-index:5;background:#DCFCE7;color:#166534}
+.stock-indicator-dot.low{background:#FEF3C7;color:#9A3412}
+.image-viewport-box{width:100%;height:190px;background:#FFFFFF;display:flex;align-items:center;justify-content:center;padding:1.5rem;border-bottom:1px solid #F1F5F9;position:relative;overflow:hidden}
+.image-viewport-box img{max-width:100%;max-height:100%;object-fit:contain;transition:transform 0.4s ease}
+.industrial-product-card:hover .image-viewport-box img{transform:scale(1.1)}
+.btn-quick-view{position:absolute;bottom:-40px;left:50%;transform:translateX(-50%);background:rgba(255,255,255,0.95);color:var(--primary-dark);border:1px solid var(--border-color);padding:8px 16px;font-size:0.85rem;font-weight:700;border-radius:4px;cursor:pointer;transition:all 0.3s ease;box-shadow:0 4px 6px rgba(0,0,0,0.1)}
+.industrial-product-card:hover .btn-quick-view{bottom:15px}
+.btn-quick-view:hover{background:var(--primary-dark);color:white}
+.card-details-area{padding:1rem;display:flex;flex-direction:column;flex:1}
+.manufacturer-brand{font-size:0.75rem;font-weight:700;color:var(--slate-gray);text-transform:uppercase;margin-bottom:0.25rem}
+.item-headline-title{font-size:0.9rem;font-weight:600;color:var(--primary-dark);line-height:1.4;height:2.6rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:0.3rem}
+.product-rating{display:flex;align-items:center;gap:5px;margin-bottom:0.5rem}
+.stars{color:#facc15;font-size:13px;letter-spacing:1px}
+.reviews-count{color:var(--slate-gray);font-size:0.75rem}
+.technical-sku{font-size:0.75rem;color:var(--slate-gray);margin-bottom:0.8rem;font-family:monospace;background:#F1F5F9;padding:2px 6px;width:fit-content;border-radius:2px}
+.technical-mini-specs{padding-top:0.6rem;margin-bottom:1rem;font-size:0.75rem;color:#475569;display:flex;flex-direction:column;gap:3px}
+.technical-mini-specs li{list-style:none;display:flex;justify-content:space-between}
+.technical-mini-specs li strong{color:var(--primary-dark)}
+.purchase-footer-row{margin-top:auto;border-top:1px dashed var(--border-color);padding-top:1rem;display:flex;flex-direction:column;gap:8px}
+.price-numeric-display{font-size:1.5rem;font-weight:800;color:var(--primary-dark);letter-spacing:-0.5px;line-height:1}
+.action-buttons-group{display:flex;gap:8px;align-items:center}
+.btn-action-add{flex:1;background:var(--accent-blue);color:var(--white);border:none;padding:0.65rem;font-weight:600;border-radius:var(--radius-sm);cursor:pointer;font-size:0.85rem;transition:var(--transition-fast);display:flex;align-items:center;justify-content:center;gap:6px}
+.btn-action-add:hover{background:#1D4ED8}
+.btn-action-add:active{transform:scale(0.97)}
+.btn-pdf-icon{width:38px;height:38px;background:#F8FAFC;border:1px solid var(--border-color);color:#DC2626;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:var(--transition-fast);flex-shrink:0}
+.btn-pdf-icon:hover{background:#FEF2F2;border-color:#DC2626;transform:scale(1.05)}
+.load-more-container{display:flex;justify-content:center;margin-top:3rem}
+.btn-load-more{background:white;color:var(--accent-blue);border:2px solid var(--accent-blue);padding:10px 30px;font-size:1rem;font-weight:700;border-radius:var(--radius-md);cursor:pointer;transition:all 0.3s ease}
+.btn-load-more:hover{background:var(--accent-blue);color:white}
+.qv-modal-overlay{position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(11,19,43,0.7);z-index:3000;display:none;align-items:center;justify-content:center;opacity:0;transition:opacity 0.3s ease;backdrop-filter:blur(2px)}
+.qv-modal-overlay.open{display:flex;opacity:1}
+.qv-modal-content{background:white;width:90%;max-width:850px;border-radius:var(--radius-md);position:relative;padding:2rem;box-shadow:0 25px 50px -12px rgba(0,0,0,0.5);display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+.btn-close-qv{position:absolute;top:15px;right:20px;background:transparent;border:none;font-size:2rem;color:var(--slate-gray);cursor:pointer;transition:color 0.2s}
+.btn-close-qv:hover{color:#ef4444}
+.qv-img-container{background:#F8FAFC;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;padding:2rem}
+.qv-img-container img{max-width:100%;max-height:300px;object-fit:contain}
+.qv-details h2{font-size:1.5rem;color:var(--primary-dark);margin:5px 0 10px 0;line-height:1.2}
+.qv-desc{color:var(--slate-gray);font-size:0.95rem;margin-bottom:1.5rem;line-height:1.5}
+.qv-price{font-size:2rem;font-weight:800;color:var(--primary-dark);margin-bottom:1.5rem}
+.btn-pdf-text{background:transparent;color:#DC2626;border:1px solid #DC2626;padding:0.8rem;border-radius:var(--radius-sm);font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:var(--transition-fast)}
+.btn-pdf-text:hover{background:#FEF2F2}
+.cart-slide-panel{position:fixed;top:0;right:-460px;width:460px;height:100vh;background:var(--white);box-shadow:-10px 0 30px rgba(0,0,0,0.1);z-index:2000;transition:right 0.3s cubic-bezier(0.16,1,0.3,1);display:flex;flex-direction:column;border-left:1px solid var(--border-color)}
+.cart-slide-panel.open{right:0}
+.dark-screen-overlay{position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(15,23,42,0.4);backdrop-filter:blur(2px);z-index:1999;opacity:0;pointer-events:none;transition:opacity 0.2s ease}
+.dark-screen-overlay.open{opacity:1;pointer-events:auto}
+.panel-head-title{padding:1.5rem;background:var(--primary-dark);color:white;display:flex;justify-content:space-between;align-items:center}
+.panel-head-title h2{font-size:1.1rem;font-weight:700}
+.close-panel-btn{background:transparent;border:none;color:white;font-size:1.6rem;cursor:pointer;transition:transform 0.2s}
+.close-panel-btn:hover{transform:rotate(90deg)}
+.panel-items-scroller{flex:1;overflow-y:auto;padding:1.5rem;display:flex;flex-direction:column;gap:1rem}
+.panel-summary-item{display:flex;gap:1rem;align-items:center;padding-bottom:1rem;border-bottom:1px solid var(--bg-light);animation:fadeInUp 0.3s ease forwards}
+.panel-summary-item-details{flex:1}
+.panel-summary-item-title{font-size:0.85rem;font-weight:600;color:var(--primary-dark);margin-bottom:0.2rem;line-height:1.3}
+.panel-summary-item-price{font-weight:800;color:var(--accent-blue)}
+.quantity-modifier-widget{display:flex;align-items:center;gap:6px;margin-top:0.4rem}
+.step-qty-btn{width:24px;height:24px;border:1px solid var(--border-color);background:var(--bg-light);border-radius:4px;cursor:pointer;font-weight:700;font-size:0.85rem;transition:background 0.2s}
+.step-qty-btn:hover{background:#e2e8f0}
+.current-qty-lbl{font-size:0.85rem;font-weight:600;min-width:15px;text-align:center}
+.btn-trash-item{background:transparent;border:none;color:#EF4444;font-size:0.8rem;font-weight:600;cursor:pointer;margin-left:auto;padding:4px 8px;border-radius:4px;transition:background 0.2s}
+.btn-trash-item:hover{background:#FEF2F2}
+.panel-checkout-footer{padding:1.5rem;border-top:1px solid var(--border-color);background:#F8FAFC}
+.panel-subtotal-row{display:flex;justify-content:space-between;font-size:1.1rem;font-weight:800;margin-bottom:1rem}
+.btn-submit-quote{width:100%;padding:0.9rem;background:var(--accent-amber);color:white;border:none;border-radius:var(--radius-sm);font-size:0.95rem;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;transition:var(--transition-fast);margin-bottom:8px}
+.btn-submit-quote:hover{background:#B45309}
+.btn-clear-cart{width:100%;padding:0.6rem;background:transparent;color:#EF4444;border:1px solid #EF4444;border-radius:var(--radius-sm);font-size:0.85rem;font-weight:600;cursor:pointer;transition:var(--transition-fast)}
+.btn-clear-cart:hover{background:#FEF2F2}
+#toastContainer{position:fixed;bottom:20px;right:20px;z-index:3000;display:flex;flex-direction:column;gap:10px}
+.toast-message{background:var(--primary-dark);color:white;padding:1rem 1.5rem;border-radius:var(--radius-sm);box-shadow:0 10px 25px -3px rgba(0,0,0,0.4);font-size:0.9rem;font-weight:500;display:flex;align-items:center;gap:10px;animation:slideInToast 0.3s cubic-bezier(0.175,0.885,0.32,1.275) forwards;border-left:4px solid #22C55E}
+@keyframes slideInToast{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+footer{background:var(--primary-dark);color:white;padding:3rem 5% 2rem 5%;border-top:5px solid var(--accent-blue);margin-top:5rem;text-align:center}
+footer p{font-size:0.85rem;opacity:0.4}
+@media (max-width:992px){.main-shop-layout{grid-template-columns:1fr}.nav-right-section{display:none}.cart-slide-panel{width:100%;right:-100%}.qv-modal-content{grid-template-columns:1fr;max-height:90vh;overflow-y:auto}}
+</style>
+</head>
+<body>
+<div id="toastContainer"></div>
+<div class="dark-screen-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="qv-modal-overlay" id="quickViewModal">
+<div class="qv-modal-content">
+<button class="btn-close-qv" onclick="closeQuickView()">&times;</button>
+<div class="qv-img-container"><img id="qv-img" src="" alt="Producto"></div>
+<div class="qv-details">
+<div class="manufacturer-brand" id="qv-brand">Marca</div>
+<h2 id="qv-title">Título</h2>
+<div class="product-rating"><span class="stars">★★★★★</span><span class="reviews-count">(Verificado)</span></div>
+<p class="qv-desc" id="qv-desc">Componente homologado para trabajos de alta exigencia industrial que requieren certificación y durabilidad prolongada.</p>
+<div class="technical-sku" id="qv-sku">SKU: 000</div>
+<ul class="technical-mini-specs" id="qv-specs" style="margin-bottom: 1.5rem;"></ul>
+<div class="qv-price" id="qv-price">$0.00</div>
+<div style="display: flex; flex-direction: column; gap: 10px;">
+<button class="btn-action-add" id="qv-add-btn" style="width: 100%; padding: 1rem; font-size: 1rem;">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg> Añadir a Cotización
+</button>
+<button id="qv-pdf-btn" class="btn-pdf-text" onclick="">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg> Descargar Datasheet Oficial (.PDF)
+</button>
+</div></div></div></div>
+<header class="navbar">
+<div class="navbar-container">
+<a href="inicio.html" class="logo"><img src="icon.png" alt="Logo" class="logo-icon"><span>ServiCentro</span></a>
+<div class="nav-right-section">
+<nav class="nav-menu"><a href="inicio.html">Inicio</a><a href="servicios.html">Servicios</a><a href="tienda.html" class="active">Tienda</a><a href="contactos.html">Contactos</a></nav>
+<button class="cart-trigger-btn" onclick="toggleCart()"><span>Cotización</span><span class="cart-counter-badge" id="globalCartCount">0</span></button>
+</div></div></header>
+<div class="search-row">
+<div class="search-container">
+<div class="search-wrapper">
+<input type="text" id="searchInput" class="search-input" placeholder="Buscar repuestos, marca o SKU..." oninput="applyFilters()">
+<button class="search-btn" onclick="applyFilters()">Buscar</button>
+</div></div></div>
+<div class="breadcrumbs">Inicio <span>/</span> Catálogo <span>/</span> <strong style="color: var(--primary-dark);">Suministros Industriales</strong></div>
+<main class="main-shop-layout">
+<aside class="sidebar-filter-panel">
+<div class="filter-group-box">
+<div class="filter-group-title">Grupo de Productos</div>
+<ul class="filter-option-list">
+<li><label class="custom-filter-label"><input type="radio" name="categoryFilter" value="all" checked onchange="applyFilters()"> Todo el Catálogo</label></li>
+<li><label class="custom-filter-label"><input type="radio" name="categoryFilter" value="motores" onchange="applyFilters()"> Motores Eléctricos</label></li>
+<li><label class="custom-filter-label"><input type="radio" name="categoryFilter" value="bombeo" onchange="applyFilters()"> Equipos de Bombeo</label></li>
+<li><label class="custom-filter-label"><input type="radio" name="categoryFilter" value="automatizacion" onchange="applyFilters()"> Automatización y Control</label></li>
+<li><label class="custom-filter-label"><input type="radio" name="categoryFilter" value="accesorios" onchange="applyFilters()"> Rodamientos y Sellos</label></li>
+</ul></div>
+<div class="filter-group-box">
+<div class="filter-group-title">Fabricante Homologado</div>
+<ul class="filter-option-list">
+<li><label class="custom-filter-label"><input type="checkbox" class="brand-check" value="weg" onchange="applyFilters()"> WEG Motors</label></li>
+<li><label class="custom-filter-label"><input type="checkbox" class="brand-check" value="siemens" onchange="applyFilters()"> Siemens AG</label></li>
+<li><label class="custom-filter-label"><input type="checkbox" class="brand-check" value="pedrollo" onchange="applyFilters()"> Pedrollo</label></li>
+<li><label class="custom-filter-label"><input type="checkbox" class="brand-check" value="schneider" onchange="applyFilters()"> Schneider Electric</label></li>
+<li><label class="custom-filter-label"><input type="checkbox" class="brand-check" value="skf" onchange="applyFilters()"> SKF Bearings</label></li>
+</ul></div>
+<div class="filter-group-box">
+<div class="filter-group-title">Rango de Precio ($)</div>
+<div class="price-range-inputs"><input type="number" id="priceMin" placeholder="Mín" oninput="applyFilters()"><span style="color: var(--slate-gray); font-size: 0.8rem;">a</span><input type="number" id="priceMax" placeholder="Máx" oninput="applyFilters()"></div>
+<button class="btn-apply-price" onclick="clearPriceFilters()">Limpiar Rango</button>
+</div></aside>
+<section>
+<div class="catalog-control-toolbar">
+<span style="color: var(--slate-gray);">Items coincidentes: <strong id="displayedCount" style="color: var(--primary-dark);">0</strong></span>
+<select class="active-sorting-select" id="sortSelect" onchange="applyFilters()">
+<option value="default">Clasificación Estándar</option><option value="price-asc">Precio: Menor a Mayor</option><option value="price-desc">Precio: Mayor a Menor</option>
+</select></div>
+<div class="products-data-grid" id="productGrid"></div>
+<div class="load-more-container" id="loadMoreContainer" style="display: none;"><button class="btn-load-more" onclick="loadMore()">Cargar Más Repuestos</button></div>
+</section></main>
+<div class="cart-slide-panel" id="cartSidebar">
+<div class="panel-head-title"><h2>Suministros Seleccionados</h2><button class="close-panel-btn" onclick="toggleCart()">&times;</button></div>
+<div class="panel-items-scroller" id="cartItemsContainer"></div>
+<div class="panel-checkout-footer">
+<div class="panel-subtotal-row"><span>Subtotal (Neto):</span><span id="cartTotalValue" style="color: var(--accent-blue); font-size: 1.4rem;">$0.00</span></div>
+<button class="btn-submit-quote" onclick="checkoutAlert()">Solicitar Cotización Formal</button>
+<button class="btn-clear-cart" onclick="clearCart()">Vaciar Cotización</button>
+</div></div>
+<footer><p>&copy; 2026 ServiCentro Industrial Solutions S.A. Machala, Ecuador.</p></footer>
+<script>
+const productsDB=[
+{id:1,category:'motores',brand:'WEG',name:'Motor Asincrónico Trifásico W22 3HP 1800RPM',sku:'WEG-W22-3HP',price:320.00,stock:'in',promo:'shipping',label:'Envío Gratis',spec1:'Potencia: 3 HP',spec2:'Voltaje: 220/440V',img:'weg-w22-3hp.jpg',rating:4.9,revs:24},
+{id:2,category:'motores',brand:'WEG',name:'Motor NEMA Premium Alta Eficiencia 5HP 3600RPM',sku:'WEG-W22-5HP',price:450.00,stock:'in',promo:'bulk',label:'Dcto Volumen',spec1:'Potencia: 5 HP',spec2:'Frecuencia: 60Hz',img:'weg-w22-5hp.jpg',rating:5.0,revs:18},
+{id:3,category:'motores',brand:'Siemens',name:'Motor Blindado Industrial IP55 2HP 1800RPM',sku:'SIE-1LE0-2HP',price:290.00,stock:'in',promo:'none',label:'',spec1:'Protección: IP55',spec2:'Eje: Claveteado',img:'sie-1le0-2hp.jpg',rating:4.8,revs:12},
+{id:4,category:'motores',brand:'WEG',name:'Motor Monofásico Uso General Condensador 1.5HP',sku:'WEG-MONO-1.5',price:195.00,stock:'in',promo:'none',label:'',spec1:'Fases: Monofásico',spec2:'Uso: Continuo',img:'weg-mono-1.5.jpg',rating:4.7,revs:9},
+{id:5,category:'motores',brand:'US Motors',name:'Motor Eléctrico Heavy Duty Trifásico 10HP',sku:'USM-HD-10HP',price:850.00,stock:'low',promo:'shipping',label:'Envío Gratis',spec1:'Potencia: 10 HP',spec2:'Armazón: Fierro',img:'usm-hd-10hp.jpg',rating:5.0,revs:7},
+{id:6,category:'bombeo',brand:'Pedrollo',name:'Bomba Centrífuga Monobloc Caudal CPm 158 1HP',sku:'PED-CPM158',price:185.00,stock:'in',promo:'shipping',label:'Top Ventas',spec1:'Succión: 1"',spec2:'Impulsor: Bronce',img:'ped-cpm158.jpg',rating:4.9,revs:55},
+{id:7,category:'bombeo',brand:'Pedrollo',name:'Bomba Sumergible Pozo Profundo Encamisada 1.5HP',sku:'PED-4SR-1.5',price:420.00,stock:'in',promo:'none',label:'',spec1:'Etapas: Multi',spec2:'Cuerpo: Inox',img:'ped-4sr-1.5.jpg',rating:4.8,revs:15},
+{id:8,category:'bombeo',brand:'Pedrollo',name:'Bomba Multietapa Vertical Alta Presión MK 2HP',sku:'PED-MK-2HP',price:580.00,stock:'low',promo:'bulk',label:'Dcto Volumen',spec1:'Presión: Alta',spec2:'Fases: Trifásica',img:'ped-mk-2hp.jpg',rating:4.9,revs:8},
+{id:9,category:'bombeo',brand:'Pedrollo',name:'Bomba Sumergible de Achique TOP 2 Aguas Limpias',sku:'PED-TOP2',price:135.00,stock:'in',promo:'none',label:'',spec1:'Paso Sólidos: 5mm',spec2:'Cable: 5 metros',img:'ped-top2.jpg',rating:4.7,revs:30},
+{id:10,category:'bombeo',brand:'Square D',name:'Presostato Regulador Automático Presión FSG-2',sku:'SQD-FSG2',price:24.00,stock:'in',promo:'none',label:'',spec1:'Rango: 20-40 PSI',spec2:'Rosca: 1/4" NPT',img:'sqd-fsg2.jpg',rating:4.6,revs:42},
+{id:11,category:'bombeo',brand:'Varem',name:'Tanque Presión Hidroneumático Vertical Membrana 100L',sku:'VRM-100L',price:210.00,stock:'in',promo:'shipping',label:'Envío Gratis',spec1:'Capacidad: 100 L',spec2:'Presión Máx: 10B',img:'vrm-100l.jpg',rating:4.8,revs:19},
+{id:12,category:'automatizacion',brand:'Siemens',name:'Variador de Frecuencia Compacto SINAMICS V20 3HP',sku:'SIE-V20-3HP',price:280.00,stock:'in',promo:'shipping',label:'Envío Gratis',spec1:'Entrada: 220V',spec2:'Control: V/F',img:'sie-v20-3hp.jpg',rating:5.0,revs:22},
+{id:13,category:'automatizacion',brand:'Schneider',name:'Variador de Velocidad Escalar Altivar 12 1HP',sku:'SCH-ATV12-1HP',price:160.00,stock:'in',promo:'none',label:'',spec1:'Potencia: 1 HP',spec2:'Modbus Integrado',img:'sch-atv12-1hp.jpg',rating:4.8,revs:14},
+{id:14,category:'automatizacion',brand:'Yaskawa',name:'Variador Vectorial Industrial Alto Torque GA500 5HP',sku:'YAS-GA500-5HP',price:410.00,stock:'low',promo:'bulk',label:'Uso Pesado',spec1:'Filtro EMC: Sí',spec2:'Torque: Elevado',img:'yas-ga500-5hp.jpg',rating:4.9,revs:11},
+{id:15,category:'automatizacion',brand:'Siemens',name:'Módulo de Control Inteligente Lógico LOGO! 230RCE',sku:'SIE-LOGO-230',price:195.00,stock:'in',promo:'none',label:'',spec1:'Salidas: Relé',spec2:'Pantalla: Integrada',img:'sie-logo-230.jpg',rating:4.7,revs:27},
+{id:16,category:'automatizacion',brand:'Siemens',name:'Controlador Programable PLC Simatic S7-1200 CPU 1214C',sku:'SIE-S71200',price:480.00,stock:'low',promo:'shipping',label:'Certificado',spec1:'Puertos: Ethernet',spec2:'Memoria: 125KB',img:'sie-s71200.jpg',rating:5.0,revs:31},
+{id:17,category:'automatizacion',brand:'Schneider',name:'Contactor Trifásico Potencia TeSys D 32A Bobina 110V',sku:'SCH-LC1D32',price:48.00,stock:'in',promo:'none',label:'',spec1:'Amperaje: 32A',spec2:'Contactos: 1NA+1NC',img:'sch-lc1d32.jpg',rating:4.9,revs:64},
+{id:18,category:'automatizacion',brand:'Siemens',name:'Contactor Magnético Industrial Sirius 18A Bobina 220V',sku:'SIE-3RT2018',price:38.00,stock:'in',promo:'none',label:'',spec1:'Amperaje: 18A',spec2:'Montaje: Riel DIN',img:'sie-3rt2018.jpg',rating:4.8,revs:41},
+{id:19,category:'automatizacion',brand:'Schneider',name:'Relé de Sobrecarga Térmico Diferencial LRD 12-18A',sku:'SCH-LRD21',price:35.00,stock:'in',promo:'none',label:'',spec1:'Rango: 12-18 A',spec2:'Clase Disparo: 10',img:'sch-lrd21.jpg',rating:4.7,revs:18},
+{id:20,category:'automatizacion',brand:'Siemens',name:'Interruptor Guardamotor Magnetotérmico Sirius 2.5-4.0A',sku:'SIE-3RV2011',price:55.00,stock:'in',promo:'none',label:'',spec1:'Rango: 2.5-4.0A',spec2:'Corte: 100kA',img:'sie-3rv2011.jpg',rating:4.9,revs:21},
+{id:21,category:'accesorios',brand:'SKF',name:'Rodamiento Rígido de Bolas Radial Hilera 6205-2Z',sku:'SKF-6205',price:18.50,stock:'in',promo:'none',label:'',spec1:'Diámetro Int: 25mm',spec2:'Sellado: Metálico',img:'skf-6205.jpg',rating:4.9,revs:82},
+{id:22,category:'accesorios',brand:'SKF',name:'Rodamiento de Bolas Sellado Alta Capacidad 6308 DDU',sku:'NSK-6308',price:35.00,stock:'in',promo:'none',label:'',spec1:'Diámetro Int: 40mm',spec2:'Sellado: Goma',img:'nsk-6308.jpg',rating:4.8,revs:45},
+{id:23,category:'accesorios',brand:'Burgmann',name:'Sello Mecánico Industrial Resorte Cónico 5/8 Vitón',sku:'BGM-58-CS',price:45.00,stock:'in',promo:'none',label:'',spec1:'Medida: 5/8"',spec2:'Material: Vitón',img:'bgm-58-cs.jpg',rating:5.0,revs:16},
+{id:24,category:'accesorios',brand:'Schneider',name:'Alambre Cobre Esmaltado Magneto Grado H AWG 18 (Kg)',sku:'COP-AWG18',price:28.00,stock:'in',promo:'none',label:'',spec1:'Calibre: AWG 18',spec2:'Aislamiento: H',img:'cop-awg18.jpg',rating:4.6,revs:33},
+{id:25,category:'accesorios',brand:'Siemens',name:'Barniz Aislante Dieléctrico Protector Secado Rápido 1G',sku:'ISO-BRNZ',price:42.00,stock:'in',promo:'none',label:'',spec1:'Volumen: 1 Galón',spec2:'Secado: Aire',img:'iso-brnz.jpg',rating:4.8,revs:24}
+];
+let cart=JSON.parse(localStorage.getItem('hydroZoroCart'))||[];
+let currentFilteredProducts=[];
+let currentPage=1;
+const itemsPerPage=8;
+document.addEventListener('DOMContentLoaded',()=>{applyFilters();updateCartUI();});
+function applyFilters(){
+const searchKeyword=document.getElementById('searchInput').value.toLowerCase().trim();
+const checkedCategoryRadio=document.querySelector('input[name="categoryFilter"]:checked');
+const selectedCategory=checkedCategoryRadio?checkedCategoryRadio.value:'all';
+const activeBrandChecks=document.querySelectorAll('.brand-check:checked');
+const targetBrands=Array.from(activeBrandChecks).map(cb=>cb.value);
+const minP=parseFloat(document.getElementById('priceMin').value)||0;
+const maxP=parseFloat(document.getElementById('priceMax').value)||Infinity;
+currentFilteredProducts=productsDB.filter(item=>{
+const innerTextMatch=item.name.toLowerCase().includes(searchKeyword)||item.sku.toLowerCase().includes(searchKeyword)||item.brand.toLowerCase().includes(searchKeyword);
+const categoryMatch=(selectedCategory==='all'||item.category===selectedCategory);
+const brandMatch=(targetBrands.length===0||targetBrands.includes(item.brand.toLowerCase()));
+const financialRangeMatch=(item.price>=minP&&item.price<=maxP);
+return innerTextMatch&&categoryMatch&&brandMatch&&financialRangeMatch;
+});
+const sortSelection=document.getElementById('sortSelect').value;
+if(sortSelection==='price-asc')currentFilteredProducts.sort((a,b)=>a.price-b.price);
+else if(sortSelection==='price-desc')currentFilteredProducts.sort((a,b)=>b.price-a.price);
+else currentFilteredProducts.sort((a,b)=>a.id-b.id);
+currentPage=1;renderGridStructure(true);
+}
+function clearPriceFilters(){document.getElementById('priceMin').value='';document.getElementById('priceMax').value='';applyFilters();}
+function renderGridStructure(clearContainer=false){
+const wrapper=document.getElementById('productGrid');
+const numericLabel=document.getElementById('displayedCount');
+const loadMoreBtn=document.getElementById('loadMoreContainer');
+if(clearContainer)wrapper.innerHTML='';
+numericLabel.innerText=currentFilteredProducts.length;
+if(currentFilteredProducts.length===0){wrapper.innerHTML=`<div style="grid-column:1/-1;background:white;border:1px dashed var(--border-color);padding:3rem;text-align:center;color:var(--slate-gray);font-weight:500;">No hay repuestos que coincidan.</div>`;loadMoreBtn.style.display='none';return;}
+const startIndex=(currentPage-1)*itemsPerPage;
+const endIndex=startIndex+itemsPerPage;
+const itemsToRender=currentFilteredProducts.slice(startIndex,endIndex);
+itemsToRender.forEach((p,index)=>{
+let promoBadgeMarkup=p.promo!=='none'&&p.label?`<div class="promo-tag-badge ${p.promo}">${p.label}</div>`:'';
+let stockMarkup=p.stock==='in'?`<div class="stock-indicator-dot">En Stock</div>`:`<div class="stock-indicator-dot low">Stock Bajo</div>`;
+const card=document.createElement('div');
+card.className='industrial-product-card';
+card.style.animationDelay=`${index*0.05}s`;
+card.innerHTML=`${promoBadgeMarkup}${stockMarkup}<div class="image-viewport-box"><img src="${p.img}" alt="${p.name}"><button class="btn-quick-view" onclick="openQuickView(${p.id})">Vista Rápida</button></div><div class="card-details-area"><div class="manufacturer-brand">${p.brand}</div><h3 class="item-headline-title">${p.name}</h3><div class="product-rating"><span class="stars">★★★★★</span><span class="reviews-count">${p.rating} (${p.revs} reseñas)</span></div><div class="technical-sku">SKU: ${p.sku}</div><div class="purchase-footer-row"><div class="price-numeric-display">$${p.price.toFixed(2)}</div><div class="action-buttons-group"><button class="btn-action-add" onclick="addToCart(${p.id})"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg> Añadir</button><button class="btn-pdf-icon" title="Descargar Datasheet PDF" onclick="generarFichaTecnica(${p.id})"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg></button></div></div></div>`;
+wrapper.appendChild(card);
+});
+if(endIndex<currentFilteredProducts.length)loadMoreBtn.style.display='flex';
+else loadMoreBtn.style.display='none';
+}
+function loadMore(){currentPage++;renderGridStructure(false);}
+function openQuickView(id){
+const p=productsDB.find(x=>x.id===id);
+if(!p)return;
+document.getElementById('qv-img').src=p.img;
+document.getElementById('qv-brand').innerText=p.brand;
+document.getElementById('qv-title').innerText=p.name;
+document.getElementById('qv-sku').innerText='SKU: '+p.sku;
+document.getElementById('qv-price').innerText='$'+p.price.toFixed(2);
+document.getElementById('qv-specs').innerHTML=`<li><span>Categoría:</span> <strong style="text-transform: capitalize;">${p.category}</strong></li><li><span>Especificación 1:</span> <strong>${p.spec1}</strong></li><li><span>Especificación 2:</span> <strong>${p.spec2}</strong></li>`;
+document.getElementById('qv-pdf-btn').onclick=function(){generarFichaTecnica(p.id);};
+document.getElementById('qv-add-btn').onclick=function(){addToCart(p.id);closeQuickView();};
+document.getElementById('quickViewModal').classList.add('open');
+}
+function closeQuickView(){document.getElementById('quickViewModal').classList.remove('open');}
+function toggleCart(){document.getElementById('cartSidebar').classList.toggle('open');document.getElementById('cartOverlay').classList.toggle('open');}
+function generarFichaTecnica(id){
+const p=productsDB.find(x=>x.id===id);
+if(!p)return;
+const fecha=new Date().toLocaleDateString('es-ES');
+const refDoc=`DOC-TECH-${p.sku}-${new Date().getFullYear()}`;
+const baseUrl=window.location.href.substring(0,window.location.href.lastIndexOf('/')+1);
+const qrUrl=`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=ServiCentro-SKU:${p.sku}`;
+let especificacionesExtra='';let aplicaciones='';
+if(p.category==='motores'){aplicaciones='Ventilación, Bombeo, Compresión, Grúas, Cintas transportadoras.';especificacionesExtra=`<tr><th>Carcasa</th><td>Hierro Fundido FC-200</td></tr><tr><th>Protección</th><td>IP55 (Polvo/Agua)</td></tr><tr><th>Aislamiento</th><td>Clase F (ΔT = 80K)</td></tr><tr><th>Eficiencia</th><td>Premium (IE3)</td></tr>`;}else if(p.category==='bombeo'){aplicaciones='Riego agrícola, Presurización, Sistemas contra incendios.';especificacionesExtra=`<tr><th>Cuerpo</th><td>Hierro Fundido Anticorrosión</td></tr><tr><th>Impulsor</th><td>Acero Inoxidable AISI 304</td></tr><tr><th>Sello Mec.</th><td>Cerámica-Grafito-NBR</td></tr><tr><th>Eje</th><td>AISI 431</td></tr>`;}else{aplicaciones='Mantenimiento industrial preventivo, Tableros de control.';especificacionesExtra=`<tr><th>Composición</th><td>Grado Industrial ISO 9001</td></tr><tr><th>Vida Útil</th><td>> 10,000 horas operativas</td></tr><tr><th>Almacenaje</th><td>Entorno seco, protegido UV</td></tr>`;}
+const htmlImprimible=`<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>Ficha Oficial - ${p.sku}</title><base href="${baseUrl}"><style>@page { size: A4 portrait; margin: 10mm; }body { font-family: 'Arial', sans-serif; color: #1e293b; margin: 0; padding: 0; box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; background: white; }.doc-container { display: flex; flex-direction: column; min-height: 100%; position: relative; }.top-bar { width: 100%; height: 6mm; background: #1E40AF; margin-bottom: 15px; }.doc-header-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; border: 2px solid #0B132B; }.doc-header-table td { border: 1px solid #0B132B; padding: 10px; font-size: 11px; }.brand-cell { width: 30%; text-align: center; background: #f8fafc; }.brand-cell h1 { font-size: 24px; color: #0B132B; margin: 0; letter-spacing: -1px; }.brand-cell h1 span { color: #1E40AF; }.title-cell { width: 45%; text-align: center; font-weight: 900; font-size: 16px; color: #0B132B; text-transform: uppercase; }.meta-cell { width: 25%; background: #f8fafc; }.content-grid { display: grid; grid-template-columns: 35% 60%; gap: 5%; margin-bottom: 20px; align-items: start;}.img-wrapper { border: 2px solid #e2e8f0; padding: 15px; border-radius: 4px; background: white; height: 180px; display: flex; align-items: center; justify-content: center; }.img-wrapper img { max-width: 100%; max-height: 100%; object-fit: contain; }.qr-box { text-align: center; margin-top: 15px; display: flex; justify-content: space-between; align-items: center; background: #f1f5f9; padding: 10px; border: 1px solid #cbd5e1; border-radius: 4px; }.qr-box img { width: 60px; height: 60px; background: white; padding: 2px; }.qr-text { text-align: left; margin-left: 10px; }.qr-text h4 { margin:0; font-size:10px; color:#0B132B; }.qr-text p { margin:0; font-size:9px; color:#64748b; }.info-column h2 { font-size: 22px; color: #0B132B; margin: 0 0 8px 0; line-height: 1.1; }.sku-badge { font-family: monospace; font-size: 13px; background: #e2e8f0; padding: 4px 10px; border-radius: 4px; color: #475569; display: inline-block; margin-bottom: 10px; font-weight: bold;}.desc-text { font-size: 12px; line-height: 1.5; color: #475569; text-align: justify; margin-bottom: 15px; }.apps-box { border-left: 4px solid #1E40AF; background: #f1f5f9; padding: 10px 15px; }.apps-box h4 { margin: 0 0 4px 0; font-size: 11px; color: #0B132B; text-transform: uppercase; }.apps-box p { margin: 0; font-size: 11px; color: #475569; }.tech-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 11px; }.tech-table th, .tech-table td { padding: 8px 12px; border: 1px solid #cbd5e1; text-align: left; }.tech-table th { width: 35%; color: #0B132B; font-weight: 700; background-color: #f1f5f9; }.tech-table tr:nth-child(even) td { background-color: #f8fafc; }.tech-table td { color: #1e293b; font-weight: 500; }.table-title { background: #0B132B !important; color: white !important; font-size: 12px; font-weight: bold; padding: 8px 12px; text-transform: uppercase; letter-spacing: 1px; }.warranty-box { border: 1px dashed #64748b; padding: 10px; font-size: 10px; color: #475569; text-align: justify; margin-bottom: 20px; border-radius: 4px; }.warranty-box strong { color: #0B132B; }.bottom-section { margin-top: auto; padding-top: 20px; }.signatures { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px; }.stamp { border: 3px solid #166534; color: #166534; font-size: 18px; font-weight: 900; padding: 8px 15px; border-radius: 6px; transform: rotate(-5deg); text-transform: uppercase; letter-spacing: 2px; }.signature-box { width: 35%; text-align: center; border-top: 1px solid #0B132B; padding-top: 5px; }.signature-box p { margin: 0; font-size: 11px; font-weight: bold; color: #0B132B; }.signature-box span { font-size: 9px; color: #64748b; }.footer { text-align: center; font-size: 9px; color: #64748b; padding-top: 10px; border-top: 1px solid #cbd5e1; }.print-btn { position: fixed; bottom: 20px; right: 20px; padding: 14px 24px; background: #0B132B; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 100; transition: transform 0.2s;}.print-btn:hover { transform: scale(1.05); background: #1E40AF;}@media print { .print-btn { display: none !important; } body { padding: 0; margin: 0; } }</style></head><body><button class="print-btn" onclick="window.print()">🖨️ Guardar PDF</button><div class="doc-container"><div class="top-bar"></div><table class="doc-header-table"><tr><td rowspan="3" class="brand-cell"><h1>ServiCentro<span>.</span></h1><div style="font-size:9px;color:#475569;margin-top:2px;">SOLUCIONES INDUSTRIALES</div></td><td rowspan="3" class="title-cell">HOJA DE ESPECIFICACIONES<br>TÉCNICAS DE PRODUCTO</td><td class="meta-cell"><strong>CÓDIGO:</strong> ${refDoc}</td></tr><tr><td class="meta-cell"><strong>EMISIÓN:</strong> ${fecha}</td></tr><tr><td class="meta-cell"><strong>FABRICANTE:</strong> ${p.brand}</td></tr></table><div class="content-grid"><div class="visual-column"><div class="img-wrapper"><img src="${p.img}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/250?text=Sin+Imagen'"></div><div class="qr-box"><img src="${qrUrl}" alt="QR"><div class="qr-text"><h4>TRAZABILIDAD</h4><p>Escanee para verificar lote y validación técnica.</p></div></div></div><div class="info-column"><h2>${p.name}</h2><div class="sku-badge">SKU COMERCIAL: ${p.sku}</div><p class="desc-text">Equipo industrial homologado bajo estrictos estándares de ingeniería electromecánica. Diseñado para garantizar máxima eficiencia operativa, continuidad de servicio y reducción de costos energéticos. Validado en banco de pruebas para su despliegue seguro en el sector industrial ecuatoriano.</p><div class="apps-box"><h4>Campos de Aplicación</h4><p>${aplicaciones}</p></div></div></div><table class="tech-table"><tr><td colspan="2" class="table-title">Datos de Placa y Rendimiento</td></tr><tr><th>${p.spec1.split(':')[0]}</th><td>${p.spec1.split(':')[1]||p.spec1}</td></tr><tr><th>${p.spec2.split(':')[0]}</th><td>${p.spec2.split(':')[1]||p.spec2}</td></tr><tr><td colspan="2" class="table-title">Estructura y Materiales</td></tr>${especificacionesExtra}</table><div class="warranty-box"><strong>Condiciones de Garantía:</strong> Este equipo cuenta con 12 meses de garantía contra defectos de fábrica, válida únicamente si la instalación es ejecutada por personal técnico calificado respetando las normativas eléctricas vigentes (NEC/IEC). La garantía no cubre daños por fluctuaciones de voltaje, cavitación o falta de mantenimiento preventivo.</div><div class="bottom-section"><div class="signatures"><div class="stamp">APROBADO<div style="font-size:8px;color:#166534;font-weight:normal;margin-top:2px;">CALIDAD TÉCNICA</div></div><div class="signature-box"><p>Ing. Departamento Técnico</p><span>ServiCentro División Ingeniería</span></div></div><div class="footer"><strong>ServiCentro Industrial Solutions S.A.</strong> | Machala, El Oro, Ecuador | soporte@servicentro.com.ec<br><em>* Datos extraídos de la ficha original del fabricante. Documento generado para uso comercial y referencial.</em></div></div></div></body></html>`;
+const ventanaFicha=window.open('','_blank','width=950,height=900');
+ventanaFicha.document.write(htmlImprimible);ventanaFicha.document.close();
+}
+function addToCart(id){
+const p=productsDB.find(x=>x.id===id);
+const exist=cart.find(x=>x.id===id);
+if(exist)exist.quantity+=1;else cart.push({...p,quantity:1});
+saveCart();updateCartUI();showToast(`Añadido: ${p.sku}`);
+const badge=document.getElementById('globalCartCount');
+badge.classList.remove('pulse');void badge.offsetWidth;badge.classList.add('pulse');
+}
+function updateQuantity(id,delta){
+const item=cart.find(p=>p.id===id);
+if(item){item.quantity+=delta;if(item.quantity<=0)cart=cart.filter(p=>p.id!==id);saveCart();updateCartUI();}
+}
+function removeFromCart(id){cart=cart.filter(p=>p.id!==id);saveCart();updateCartUI();}
+function clearCart(){if(confirm('¿Desea vaciar toda su cotización?')){cart=[];saveCart();updateCartUI();showToast('Cotización vaciada');}}
+function saveCart(){localStorage.setItem('hydroZoroCart',JSON.stringify(cart));}
+function updateCartUI(){
+const container=document.getElementById('cartItemsContainer');
+const totalCount=document.getElementById('globalCartCount');
+const totalValue=document.getElementById('cartTotalValue');
+container.innerHTML='';let tItems=0,tPrice=0;
+cart.forEach(item=>{
+tItems+=item.quantity;tPrice+=(item.price*item.quantity);
+const div=document.createElement('div');div.className='panel-summary-item';
+div.innerHTML=`<div class="panel-summary-item-details"><div class="panel-summary-item-title">${item.name}</div><div class="panel-summary-item-price">$${item.price.toFixed(2)}</div><div class="quantity-modifier-widget"><button class="step-qty-btn" onclick="updateQuantity(${item.id},-1)">-</button><span class="current-qty-lbl">${item.quantity}</span><button class="step-qty-btn" onclick="updateQuantity(${item.id},1)">+</button><button class="btn-trash-item" onclick="removeFromCart(${item.id})">Quitar</button></div></div>`;
+container.appendChild(div);});
+totalCount.innerText=tItems;totalValue.innerText=`$${tPrice.toFixed(2)}`;
+if(cart.length===0)container.innerHTML='<p style="color:var(--slate-gray);text-align:center;margin-top:2rem;">No hay repuestos en su lista.</p>';
+}
+function checkoutAlert(){if(cart.length===0)alert("Agregue repuestos a su cotización primero.");else alert("Redirigiendo a plataforma corporativa...");}
+function showToast(msg){
+const container=document.getElementById('toastContainer');
+const toast=document.createElement('div');toast.className='toast-message';
+toast.innerHTML=`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> ${msg}`;
+container.appendChild(toast);
+setTimeout(()=>{toast.style.opacity='0';toast.style.transform='translateX(100%)';setTimeout(()=>toast.remove(),300);},2500);
+}
+</script>
+</body>
+</html>
